@@ -1,7 +1,7 @@
 
 Name: app-dns
 Epoch: 1
-Version: 1.0.10
+Version: 1.1.0
 Release: 1%{dist}
 Summary: DNS Server
 License: GPLv3
@@ -16,7 +16,7 @@ Requires: app-network
 The local DNS server can be used for mapping IP addresses on your network to hostnames.
 
 %package core
-Summary: DNS Server - APIs and install
+Summary: DNS Server - Core
 License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
