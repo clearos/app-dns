@@ -43,12 +43,4 @@ $app['core_requires'] = array(
 
 $app['core_file_manifest'] = array(
     'dnsmasq.php'=> array('target' => '/var/clearos/base/daemon/dnsmasq.php'),
-    'dns'=> array( 
-        'target' => '/var/clearos/events/network_configuration/dns',
-        'mode' => '0755'
-    ),
-    'dns'=> array( 
-        'target' => '/var/clearos/events/network_peerdns/dns',
-        'mode' => '0755'
-    ),
 );

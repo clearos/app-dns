@@ -19,9 +19,7 @@ if [ -z "$CHECK" ]; then
     [ ! -e /etc/resolv-peerdns.conf ] && cp /etc/resolv.conf /etc/resolv-peerdns.conf
 fi
 
-# Run network configuration event
-#--------------------------------
-
-/var/clearos/events/network_configuration/dns
+# Reload dnsmasq
+#---------------
 
 /sbin/service dnsmasq condrestart >/dev/null 2>&1
