@@ -1,7 +1,7 @@
 
 Name: app-dns
 Epoch: 1
-Version: 1.1.0
+Version: 1.4.8
 Release: 1%{dist}
 Summary: DNS Server
 License: GPLv3
@@ -10,7 +10,7 @@ Source: %{name}-%{version}.tar.gz
 Buildarch: noarch
 Requires: %{name}-core = 1:%{version}-%{release}
 Requires: app-base
-Requires: app-network
+Requires: app-network >= 1:1.4.8
 
 %description
 The local DNS server can be used for mapping IP addresses on your network to hostnames.
@@ -21,6 +21,7 @@ License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
 Requires: dnsmasq >= 2.48
+Requires: initscripts >= 9.03.31-3
 Requires: net-tools
 
 %description core
@@ -36,6 +37,7 @@ This package provides the core API and libraries.
 mkdir -p -m 755 %{buildroot}/usr/clearos/apps/dns
 cp -r * %{buildroot}/usr/clearos/apps/dns/
 
+install -D -m 0755 packaging/dns %{buildroot}/var/clearos/events/network_peerdns/dns
 install -D -m 0644 packaging/dnsmasq.php %{buildroot}/var/clearos/base/daemon/dnsmasq.php
 
 %post
@@ -79,4 +81,5 @@ exit 0
 /usr/clearos/apps/dns/deploy
 /usr/clearos/apps/dns/language
 /usr/clearos/apps/dns/libraries
+/var/clearos/events/network_peerdns/dns
 /var/clearos/base/daemon/dnsmasq.php

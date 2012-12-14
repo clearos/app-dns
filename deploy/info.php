@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'dns';
-$app['version'] = '1.1.0';
+$app['version'] = '1.4.8';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -32,14 +32,23 @@ $app['controllers']['dns']['title'] = lang('dns_app_name');
 /////////////////////////////////////////////////////////////////////////////
 
 $app['requires'] = array(
-    'app-network',
+    'app-network >= 1:1.4.8',
 );
 
 $app['core_requires'] = array(
     'dnsmasq >= 2.48',
+    'initscripts >= 9.03.31-3',
     'net-tools',
 );
 
 $app['core_file_manifest'] = array(
     'dnsmasq.php'=> array('target' => '/var/clearos/base/daemon/dnsmasq.php'),
+    'dns'=> array( 
+        'target' => '/var/clearos/events/network_configuration/dns',
+        'mode' => '0755'
+    ),
+    'dns'=> array( 
+        'target' => '/var/clearos/events/network_peerdns/dns',
+        'mode' => '0755'
+    ),
 );
