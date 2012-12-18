@@ -37,7 +37,6 @@ This package provides the core API and libraries.
 mkdir -p -m 755 %{buildroot}/usr/clearos/apps/dns
 cp -r * %{buildroot}/usr/clearos/apps/dns/
 
-install -D -m 0755 packaging/dns %{buildroot}/var/clearos/events/network_peerdns/dns
 install -D -m 0644 packaging/dnsmasq.php %{buildroot}/var/clearos/base/daemon/dnsmasq.php
 
 %post
@@ -81,5 +80,4 @@ exit 0
 /usr/clearos/apps/dns/deploy
 /usr/clearos/apps/dns/language
 /usr/clearos/apps/dns/libraries
-/var/clearos/events/network_peerdns/dns
 /var/clearos/base/daemon/dnsmasq.php
