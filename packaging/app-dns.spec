@@ -10,7 +10,7 @@ Source: %{name}-%{version}.tar.gz
 Buildarch: noarch
 Requires: %{name}-core = 1:%{version}-%{release}
 Requires: app-base
-Requires: app-network >= 1:1.4.8
+Requires: app-network >= 1:1.4.10
 
 %description
 The local DNS server can be used for mapping IP addresses on your network to hostnames.

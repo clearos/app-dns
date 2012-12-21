@@ -32,7 +32,7 @@ $app['controllers']['dns']['title'] = lang('dns_app_name');
 /////////////////////////////////////////////////////////////////////////////
 
 $app['requires'] = array(
-    'app-network >= 1:1.4.8',
+    'app-network >= 1:1.4.10',
 );
 
 $app['core_requires'] = array(
