@@ -1,7 +1,7 @@
 
 Name: app-dns
 Epoch: 1
-Version: 1.4.10
+Version: 1.4.12
 Release: 1%{dist}
 Summary: DNS Server
 License: GPLv3
@@ -10,7 +10,7 @@ Source: %{name}-%{version}.tar.gz
 Buildarch: noarch
 Requires: %{name}-core = 1:%{version}-%{release}
 Requires: app-base
-Requires: app-network >= 1:1.4.10
+Requires: app-network >= 1:1.4.11
 
 %description
 The local DNS server can be used for mapping IP addresses on your network to hostnames.
@@ -20,6 +20,7 @@ Summary: DNS Server - Core
 License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
+Requires: app-network-core >= 1:1.4.11
 Requires: dnsmasq >= 2.48
 Requires: initscripts >= 9.03.31-3
 Requires: net-tools

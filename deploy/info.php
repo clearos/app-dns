@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'dns';
-$app['version'] = '1.4.10';
+$app['version'] = '1.4.12';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -32,10 +32,11 @@ $app['controllers']['dns']['title'] = lang('dns_app_name');
 /////////////////////////////////////////////////////////////////////////////
 
 $app['requires'] = array(
-    'app-network >= 1:1.4.10',
+    'app-network >= 1:1.4.11',
 );
 
 $app['core_requires'] = array(
+    'app-network-core >= 1:1.4.11',
     'dnsmasq >= 2.48',
     'initscripts >= 9.03.31-3',
     'net-tools',
