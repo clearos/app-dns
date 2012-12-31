@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'dns';
-$app['version'] = '1.4.12';
+$app['version'] = '1.4.14';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -36,7 +36,7 @@ $app['requires'] = array(
 );
 
 $app['core_requires'] = array(
-    'app-network-core >= 1:1.4.11',
+    'app-network-core >= 1:1.4.13',
     'dnsmasq >= 2.48',
     'initscripts >= 9.03.31-3',
     'net-tools',

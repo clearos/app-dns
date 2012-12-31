@@ -1,7 +1,7 @@
 
 Name: app-dns
 Epoch: 1
-Version: 1.4.12
+Version: 1.4.14
 Release: 1%{dist}
 Summary: DNS Server
 License: GPLv3
@@ -20,7 +20,7 @@ Summary: DNS Server - Core
 License: LGPLv3
 Group: ClearOS/Libraries
 Requires: app-base-core
-Requires: app-network-core >= 1:1.4.11
+Requires: app-network-core >= 1:1.4.13
 Requires: dnsmasq >= 2.48
 Requires: initscripts >= 9.03.31-3
 Requires: net-tools

@@ -16,7 +16,6 @@ CHECK=`grep "^resolv-file=" /etc/dnsmasq.conf 2>/dev/null`
 if [ -z "$CHECK" ]; then
     logger -p local6.notice -t installer "app-dns - adding resolv-peerdns.conf alternative"
     echo "resolv-file=/etc/resolv-peerdns.conf" >> /etc/dnsmasq.conf
-    [ ! -e /etc/resolv-peerdns.conf ] && cp /etc/resolv.conf /etc/resolv-peerdns.conf
 fi
 
 /var/clearos/events/network_configuration/network_resolver
