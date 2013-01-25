@@ -3,7 +3,7 @@
 // http://www.clearfoundation.com/docs/developer/translations/
 
 $lang['dns_alias'] = 'Alias';
-$lang['dns_app_description'] = 'The local DNS server can be used for mapping IP addresses on your network to hostnames.';
-$lang['dns_app_name'] = 'DNS Server';
-$lang['dns_dns_entry'] = 'DNS Entry';
-$lang['dns_dns_server'] = 'DNS Server';
+$lang['dns_app_description'] = 'Lokalny serwer DNS może być używany do mapowania adresów IP w Twojej sieci z nazwami hostów.';
+$lang['dns_app_name'] = 'Serwer DNS';
+$lang['dns_dns_entry'] = 'Wpis DNS';
+$lang['dns_dns_server'] = 'Serwer DNS';
