@@ -14,4 +14,4 @@ logger -p local6.notice -t installer "app-dns-core - enabling dnsmasq server"
 /sbin/chkconfig dnsmasq on
 
 logger -p local6.notice -t installer "app-dns-core - enabling dnsmasq server"
-/sbin/service dnsmasq start
+/sbin/service dnsmasq start >/dev/null 2>&1
