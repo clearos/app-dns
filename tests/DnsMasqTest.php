@@ -3,8 +3,8 @@
 /**
  * DnsMasq class.
  *
- * @category   Apps
- * @package    DNS
+ * @category   apps
+ * @package    dns
  * @subpackage Tests
  * @author     ClearFoundation <developer@clearfoundation.com>
  * @copyright  2003-2011 ClearFoundation
