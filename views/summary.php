@@ -104,9 +104,12 @@ foreach ($hosts as $real_ip => $entry) {
 // Summary table
 ///////////////////////////////////////////////////////////////////////////////
 
+$options['default_rows'] = 100;
+
 echo summary_table(
     lang('dns_dns_server'),
     $anchors,
     $headers,
-    $items
+    $items,
+    $options
 );
