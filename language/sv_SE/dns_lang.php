@@ -6,4 +6,4 @@ $lang['dns_alias'] = 'Alias';
 $lang['dns_app_description'] = 'Den lokala DNS-servern kan användas för att mappa IP-adresser på ditt nätverk till värdnamn.';
 $lang['dns_app_name'] = 'DNS-server';
 $lang['dns_dns_entry'] = 'DNS värden';
-$lang['dns_dns_server'] = 'DNS Server';
+$lang['dns_dns_server'] = 'DNS-server';
