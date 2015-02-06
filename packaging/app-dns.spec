@@ -1,7 +1,7 @@
 
 Name: app-dns
 Epoch: 1
-Version: 2.0.5
+Version: 2.0.18
 Release: 1%{dist}
 Summary: DNS Server
 License: GPLv3
