@@ -1,7 +1,7 @@
 
 Name: app-dns
 Epoch: 1
-Version: 2.1.6
+Version: 2.3.20
 Release: 1%{dist}
 Summary: DNS Server
 License: GPLv3
@@ -76,6 +76,7 @@ exit 0
 %files core
 %defattr(-,root,root)
 %exclude /usr/clearos/apps/dns/packaging
+%exclude /usr/clearos/apps/dns/unify.json
 %dir /usr/clearos/apps/dns
 /usr/clearos/apps/dns/deploy
 /usr/clearos/apps/dns/language
