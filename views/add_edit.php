@@ -42,18 +42,18 @@ $this->load->language('network');
 
 if ($form_type === 'edit') {
     $read_only = TRUE;
-    $form_path = '/dns/edit';
+    $form_path = '/dns/entries/edit';
     $buttons = array(
         form_submit_update('submit'),
-        anchor_cancel('/app/dns/'),
-        anchor_delete('/app/dns/delete/' . $ip)
+        anchor_cancel('/app/dns/entries'),
+        anchor_delete('/app/dns/entries/delete/' . $ip)
     );
 } else {
     $read_only = FALSE;
-    $form_path = '/dns/add';
+    $form_path = '/dns/entries/add';
     $buttons = array(
         form_submit_add('submit'),
-        anchor_cancel('/app/dns/')
+        anchor_cancel('/app/dns/entries')
     );
 }
 

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Local DNS Server summary view.
+ * Local DNS server entries summary view.
  *
  * @category   apps
  * @package    dns
  * @subpackage views
  * @author     ClearFoundation <developer@clearfoundation.com>
- * @copyright  2011 ClearFoundation
+ * @copyright  2011-2017 ClearFoundation
  * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License version 3 or later
  * @link       http://www.clearfoundation.com/docs/developer/apps/dns/
  */
@@ -49,7 +49,7 @@ $headers = array(
 // Anchors
 ///////////////////////////////////////////////////////////////////////////////
 
-$anchors = array(anchor_add('/app/dns/add/'));
+$anchors = array(anchor_add('/app/dns/entries/add/'));
 
 ///////////////////////////////////////////////////////////////////////////////
 // Items
@@ -76,8 +76,8 @@ foreach ($hosts as $real_ip => $entry) {
 
     $detail_buttons = button_set(
         array(
-            anchor_edit('/app/dns/edit/' . $ip, 'high'),
-            anchor_delete('/app/dns/delete/' . $ip, 'high')
+            anchor_edit('/app/dns/entries/edit/' . $ip, 'high'),
+            anchor_delete('/app/dns/entries/delete/' . $ip, 'high')
         )
     );
 
@@ -90,7 +90,7 @@ foreach ($hosts as $real_ip => $entry) {
     $order_ip = "<span style='display: none'>" . sprintf("%032b", ip2long($ip)) . "</span>$ip";
 
     $item['title'] = $ip . " - " . $hostname;
-    $item['action'] = '/app/dns/edit/' . $ip;
+    $item['action'] = '/app/dns/entries/edit/' . $ip;
     $item['anchors'] = $detail_buttons;
     $item['details'] = array(
         $order_ip,

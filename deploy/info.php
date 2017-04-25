@@ -26,6 +26,7 @@ $app['subcategory'] = lang('base_subcategory_infrastructure');
 /////////////////////////////////////////////////////////////////////////////
 
 $app['controllers']['dns']['title'] = lang('dns_app_name');
+$app['controllers']['entries']['title'] = lang('dns_dns_entries');
 
 /////////////////////////////////////////////////////////////////////////////
 // Packaging

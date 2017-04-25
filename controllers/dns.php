@@ -1,13 +1,13 @@
 <?php
 
 /**
- * DNS server controller.
+ * DNS controller.
  *
  * @category   apps
  * @package    dns
  * @subpackage controllers
  * @author     ClearFoundation <developer@clearfoundation.com>
- * @copyright  2011 ClearFoundation
+ * @copyright  2017 ClearFoundation
  * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License version 3 or later
  * @link       http://www.clearfoundation.com/docs/developer/apps/dns/
  */
@@ -30,31 +30,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
-// D E P E N D E N C I E S
-///////////////////////////////////////////////////////////////////////////////
-
-use \Exception as Exception;
-
-///////////////////////////////////////////////////////////////////////////////
 // C L A S S
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * DNS server controller.
+ * DNS controller.
  *
  * @category   apps
  * @package    dns
  * @subpackage controllers
  * @author     ClearFoundation <developer@clearfoundation.com>
- * @copyright  2011 ClearFoundation
+ * @copyright  2017 ClearFoundation
  * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License version 3 or later
  * @link       http://www.clearfoundation.com/docs/developer/apps/dns/
  */
 
-class Dns extends ClearOS_Controller
+class DNS extends ClearOS_Controller
 {
     /**
-     * DNS server summary view.
+     * DNS summary view.
      *
      * @return view
      */
@@ -64,187 +58,13 @@ class Dns extends ClearOS_Controller
         // Load libraries
         //---------------
 
-        $this->load->library('network/Hosts');
         $this->lang->load('dns');
 
-        // Load view data
-        //---------------
-
-        try {
-            $data['hosts'] = $this->hosts->get_entries();
-        } catch (Exception $e) {
-            $this->page->view_exception($e);
-            return;
-        }
- 
         // Load views
         //-----------
 
-        $this->page->view_form('dns/summary', $data, lang('dns_app_name'));
-    }
+        $views = array('dns/entries');
 
-    /**
-     * Add DNS entry view.
-     *
-     * @param string $ip IP address
-     *
-     * @return view
-     */
-
-    function add($ip = NULL)
-    {
-        $this->_item($ip, 'add');
-    }
-
-    /**
-     * Delete DNS entry view.
-     *
-     * @param string $ip IP address
-     *
-     * @return view
-     */
-
-    function delete($ip = NULL)
-    {
-        $confirm_uri = '/app/dns/destroy/' . $ip;
-        $cancel_uri = '/app/dns';
-        $items = array($ip);
-
-        $this->page->view_confirm_delete($confirm_uri, $cancel_uri, $items);
-    }
-
-    /**
-     * Edit DNS entry view.
-     *
-     * @param string $ip IP address
-     *
-     * @return view
-     */
-
-    function edit($ip = NULL)
-    {
-        $this->_item($ip, 'edit');
-    }
-
-    /**
-     * Destroys DNS entry view.
-     *
-     * @param string $ip IP address
-     *
-     * @return view
-     */
-
-    function destroy($ip = NULL)
-    {
-        // Load libraries
-        //---------------
-
-        $this->load->library('network/Hosts');
-        $this->load->library('dns/Dnsmasq');
-
-        // Handle delete
-        //--------------
-
-        try {
-            $this->hosts->delete_entry($ip);
-            $this->dnsmasq->reset();
-
-            $this->page->set_status_deleted();
-            redirect('/dns');
-        } catch (Exception $e) {
-            $this->page->view_exception($e);
-            return;
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // P R I V A T E
-    ///////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * DNS entry common add/edit form handler.
-     *
-     * @param string $ip        IP address
-     * @param string $form_type form type
-     *
-     * @return view
-     */
-
-    function _item($ip, $form_type)
-    {
-        // Load libraries
-        //---------------
-
-        $this->load->library('network/Hosts');
-        $this->load->library('dns/Dnsmasq');
-        $this->lang->load('dns');
-        $this->lang->load('network');
-
-        // Set validation rules
-        //---------------------
-
-        $check_exists = ($form_type === 'add') ? TRUE : FALSE;
-
-        $this->form_validation->set_policy('ip', 'network/Hosts', 'validate_ip', TRUE, $check_exists);
-        $this->form_validation->set_policy('hostname', 'network/Hosts', 'validate_hostname', TRUE);
-
-        foreach ($_POST as $key => $value) {
-            if (preg_match('/^alias([0-9])+$/', $key))
-                $this->form_validation->set_policy($key, 'network/Hosts', 'validate_alias');
-        }
-
-        $form_ok = $this->form_validation->run();
-
-        // Handle form submit
-        //-------------------
-
-        if ($this->input->post('submit') && ($form_ok === TRUE)) {
-
-            $ip = $this->input->post('ip');
-            $hostname = $this->input->post('hostname');
-            $aliases = array();
-
-            foreach ($_POST as $key => $value) {
-                if (preg_match('/^alias([0-9])+$/', $key) && !(empty($value)))
-                    $aliases[] = $this->input->post($key);
-            }
-
-            try {
-                if ($form_type === 'edit') 
-                    $this->hosts->edit_entry($ip, $hostname, $aliases);
-                else
-                    $this->hosts->add_entry($ip, $hostname, $aliases);
-
-                $this->dnsmasq->reset();
-
-                // Return to summary page with status message
-                $this->page->set_status_added();
-                redirect('/dns');
-            } catch (Exception $e) {
-                $this->page->view_exception($e);
-                return;
-            }
-        }
-
-        // Load the view data 
-        //------------------- 
-
-        try {
-            if ($form_type === 'edit') 
-                $entry = $this->hosts->get_entry($ip);
-        } catch (Exception $e) {
-            $this->page->view_exception($e);
-            return;
-        }
-
-        $data['form_type'] = $form_type;
-        $data['ip'] = $ip;
-        $data['hostname'] = isset($entry['hostname']) ? $entry['hostname'] : '';
-        $data['aliases'] = isset($entry['aliases']) ? $entry['aliases'] : '';
-
-        // Load the views
-        //---------------
-
-        $this->page->view_form('dns/add_edit', $data, lang('dns_dns_entry'));
+        $this->page->view_forms($views, lang('dns_app_name'));
     }
 }
