@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DNS domain delegate controller.
+ * AD DNS domain controller.
  *
  * @category   apps
  * @package    dns
@@ -40,7 +40,7 @@ use \Exception as Exception;
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * DNS domain delegate controller.
+ * AD DNS domain controller.
  *
  * @category   apps
  * @package    dns
@@ -71,7 +71,7 @@ class Domains extends ClearOS_Controller
         //---------------
 
         try {
-            $data['domains'] = $this->dnsmasq->get_delegated_domains();
+            $data['domains'] = $this->dnsmasq->get_ad_domains();
         } catch (Exception $e) {
             $this->page->view_exception($e);
             return;
@@ -83,6 +83,6 @@ class Domains extends ClearOS_Controller
         if (empty($data['domains']))
             return;
         else
-            $this->page->view_form('dns/domains', $data, lang('dns_domain_delegation'));
+            $this->page->view_form('dns/domains', $data, lang('dns_active_directory_domains'));
     }
 }

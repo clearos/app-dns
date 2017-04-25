@@ -74,7 +74,7 @@ $options['default_rows'] = 100;
 $options['no_action'] = TRUE;
 
 echo summary_table(
-    lang('dns_domain_delegation'),
+    lang('dns_active_directory_domains'),
     [],
     $headers,
     $items,

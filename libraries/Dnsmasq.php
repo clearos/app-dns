@@ -94,7 +94,7 @@ class Dnsmasq extends Daemon
     ///////////////////////////////////////////////////////////////////////////////
 
     const FILE_CONFIG = '/etc/dnsmasq.conf';
-    const FILE_DOMAIN_DELEGATION = '/etc/dnsmasq.d/delegation.conf';
+    const FILE_AD_DOMAINS = '/etc/dnsmasq.d/active_directory.conf';
     const DEFAULT_PORT = 53;
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -120,17 +120,17 @@ class Dnsmasq extends Daemon
     }
 
     /**
-     * Returns delegated domains.
+     * Returns AD domains.
      *
-     * @return array delegated domain list
+     * @return array AD domain list
      * @throws Engine_Exception
      */
 
-    public function get_delegated_domains()
+    public function get_ad_domains()
     {
         clearos_profile(__METHOD__, __LINE__);
 
-        $config = new File(self::FILE_DOMAIN_DELEGATION);
+        $config = new File(self::FILE_AD_DOMAINS);
 
         $lines = $config->get_contents_as_array();
 
@@ -169,19 +169,19 @@ class Dnsmasq extends Daemon
     }
 
     /**
-     * Sets delegated domains.
+     * Sets AD domains.
      *
-     * @param array $domains delegated domains
+     * @param array $domains AD domains
      *
      * @return void
      * @throws Engine_Exception
      */
 
-    public function set_delegated_domains($domains)
+    public function set_ad_domains($domains)
     {
         clearos_profile(__METHOD__, __LINE__);
 
-        $config = new File(self::FILE_DOMAIN_DELEGATION . '.new');
+        $config = new File(self::FILE_AD_DOMAINS . '.new');
 
         $lines = '';
 
@@ -196,7 +196,7 @@ class Dnsmasq extends Daemon
         $config->create('root', 'root', '0644');
         $config->add_lines($lines);
 
-        $config->move_to(self::FILE_DOMAIN_DELEGATION);
+        $config->move_to(self::FILE_AD_DOMAINS);
     }
 
     /**
