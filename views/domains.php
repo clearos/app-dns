@@ -41,60 +41,26 @@ $this->lang->load('network');
 ///////////////////////////////////////////////////////////////////////////////
 
 $headers = array(
-    lang('network_ip'),
-    lang('network_hostname'),
+    lang('network_domain'),
+    lang('dns_primary_dns'),
+    lang('dns_secondary_dns'),
 );
-
-///////////////////////////////////////////////////////////////////////////////
-// Anchors
-///////////////////////////////////////////////////////////////////////////////
-
-$anchors = array(anchor_add('/app/dns/entries/add/'));
 
 ///////////////////////////////////////////////////////////////////////////////
 // Items
 ///////////////////////////////////////////////////////////////////////////////
 
-foreach ($hosts as $real_ip => $entry) {
+foreach ($domains as $domain => $ips) {
 
-    $ip = $entry['ip'];
-    $hostname = $entry['hostname'];
-    $alias = (count($entry['aliases']) > 0) ? $entry['aliases'][0] : '';
-    
-    // Add '...' to indicate more aliases exist
-    if (count($entry['aliases']) > 1)
-        $alias .= " ..."; 
+    $ip = $ips[0];
+    $alt_ip = (empty($ips[1])) ? '-' : $ips[1];
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Item buttons
-    ///////////////////////////////////////////////////////////////////////////
-
-    // Hide 127.0.0.1 entry
-
-    if (($ip === '127.0.0.1') || ($ip === '::1'))
-        continue;
-
-    $detail_buttons = button_set(
-        array(
-            anchor_edit('/app/dns/entries/edit/' . $ip, 'high'),
-            anchor_delete('/app/dns/entries/delete/' . $ip, 'high')
-        )
-    );
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Item details
-    ///////////////////////////////////////////////////////////////////////////
-
-    // TODO: not IPv6 friendly
-    // Order IPs in human-readable way
-    $order_ip = "<span style='display: none'>" . sprintf("%032b", ip2long($ip)) . "</span>$ip";
-
-    $item['title'] = $ip . " - " . $hostname;
-    $item['action'] = '/app/dns/entries/edit/' . $ip;
-    $item['anchors'] = $detail_buttons;
+    $item['title'] = $domain;
+    $item['action'] = '/app/dns/domains/edit/' . $domain;
     $item['details'] = array(
-        $order_ip,
-        $hostname,
+        $domain,
+        $ip,
+        $alt_ip,
     );
 
     $items[] = $item;
@@ -105,10 +71,11 @@ foreach ($hosts as $real_ip => $entry) {
 ///////////////////////////////////////////////////////////////////////////////
 
 $options['default_rows'] = 100;
+$options['no_action'] = TRUE;
 
 echo summary_table(
-    lang('dns_dns_entries'),
-    $anchors,
+    lang('dns_domain_delegation'),
+    [],
     $headers,
     $items,
     $options

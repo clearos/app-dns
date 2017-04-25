@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DNS controller.
+ * DNS domain delegate controller.
  *
  * @category   apps
  * @package    dns
@@ -30,11 +30,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
+// D E P E N D E N C I E S
+///////////////////////////////////////////////////////////////////////////////
+
+use \Exception as Exception;
+
+///////////////////////////////////////////////////////////////////////////////
 // C L A S S
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * DNS controller.
+ * DNS domain delegate controller.
  *
  * @category   apps
  * @package    dns
@@ -45,10 +51,10 @@
  * @link       http://www.clearfoundation.com/docs/developer/apps/dns/
  */
 
-class DNS extends ClearOS_Controller
+class Domains extends ClearOS_Controller
 {
     /**
-     * DNS summary view.
+     * DNS entries summary view.
      *
      * @return view
      */
@@ -58,13 +64,25 @@ class DNS extends ClearOS_Controller
         // Load libraries
         //---------------
 
+        $this->load->library('dns/Dnsmasq');
         $this->lang->load('dns');
 
+        // Load view data
+        //---------------
+
+        try {
+            $data['domains'] = $this->dnsmasq->get_delegated_domains();
+        } catch (Exception $e) {
+            $this->page->view_exception($e);
+            return;
+        }
+ 
         // Load views
         //-----------
 
-        $views = array('dns/domains', 'dns/entries');
-
-        $this->page->view_forms($views, lang('dns_app_name'));
+        if (empty($data['domains']))
+            return;
+        else
+            $this->page->view_form('dns/domains', $data, lang('dns_domain_delegation'));
     }
 }

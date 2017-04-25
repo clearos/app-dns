@@ -94,6 +94,7 @@ class Dnsmasq extends Daemon
     ///////////////////////////////////////////////////////////////////////////////
 
     const FILE_CONFIG = '/etc/dnsmasq.conf';
+    const FILE_DOMAIN_DELEGATION = '/etc/dnsmasq.d/delegation.conf';
     const DEFAULT_PORT = 53;
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -119,6 +120,36 @@ class Dnsmasq extends Daemon
     }
 
     /**
+     * Returns delegated domains.
+     *
+     * @return array delegated domain list
+     * @throws Engine_Exception
+     */
+
+    public function get_delegated_domains()
+    {
+        clearos_profile(__METHOD__, __LINE__);
+
+        $config = new File(self::FILE_DOMAIN_DELEGATION);
+
+        $lines = $config->get_contents_as_array();
+
+        $domains = array();
+
+        foreach ($lines as $line) {
+            $matches = array();
+            if (preg_match('/^server=\/([0-9a-zA-Z\.\-_]+)\/([0-9\.]*)$/', $line, $matches)) {
+                if (!isset($domains[$matches[1]]))
+                    $domains[$matches[1]] = [];
+
+                $domains[$matches[1]][]= $matches[2];
+            }
+        }
+
+        return $domains;
+    }
+
+    /**
      * Returns port used by DNS server.
      *
      * @return integer port number
@@ -135,6 +166,37 @@ class Dnsmasq extends Daemon
             return $config['port'];
         else
             return self::DEFAULT_PORT;
+    }
+
+    /**
+     * Sets delegated domains.
+     *
+     * @param array $domains delegated domains
+     *
+     * @return void
+     * @throws Engine_Exception
+     */
+
+    public function set_delegated_domains($domains)
+    {
+        clearos_profile(__METHOD__, __LINE__);
+
+        $config = new File(self::FILE_DOMAIN_DELEGATION . '.new');
+
+        $lines = '';
+
+        foreach ($domains as $domain => $ips) {
+            foreach ($ips as $ip)
+                $lines .= "server=/$domain/$ip\n";
+        }
+
+        if ($config->exists())
+            $config->delete();
+
+        $config->create('root', 'root', '0644');
+        $config->add_lines($lines);
+
+        $config->move_to(self::FILE_DOMAIN_DELEGATION);
     }
 
     /**

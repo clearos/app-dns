@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 $app['basename'] = 'dns';
-$app['version'] = '2.3.22';
+$app['version'] = '2.3.23';
 $app['release'] = '1';
 $app['vendor'] = 'ClearFoundation';
 $app['packager'] = 'ClearFoundation';
@@ -26,6 +26,7 @@ $app['subcategory'] = lang('base_subcategory_infrastructure');
 /////////////////////////////////////////////////////////////////////////////
 
 $app['controllers']['dns']['title'] = lang('dns_app_name');
+$app['controllers']['domains']['title'] = lang('dns_domain_delegation');
 $app['controllers']['entries']['title'] = lang('dns_dns_entries');
 
 /////////////////////////////////////////////////////////////////////////////
