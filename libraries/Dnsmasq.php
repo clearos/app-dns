@@ -132,6 +132,9 @@ class Dnsmasq extends Daemon
 
         $config = new File(self::FILE_AD_DOMAINS);
 
+        if (!$config->exists())
+            return [];
+
         $lines = $config->get_contents_as_array();
 
         $domains = array();
