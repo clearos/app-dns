@@ -189,8 +189,10 @@ class Dnsmasq extends Daemon
         $lines = '';
 
         foreach ($domains as $domain => $ips) {
-            foreach ($ips as $ip)
-                $lines .= "server=/$domain/$ip\n";
+            foreach ($ips as $ip) {
+                if (!empty($ip))
+                    $lines .= "server=/$domain/$ip\n";
+            }
         }
 
         if ($config->exists())
