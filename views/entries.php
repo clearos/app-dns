@@ -43,6 +43,7 @@ $this->lang->load('network');
 $headers = array(
     lang('network_ip'),
     lang('network_hostname'),
+    lang('dns_alias'),
 );
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -62,8 +63,12 @@ foreach ($hosts as $real_ip => $entry) {
     $alias = (count($entry['aliases']) > 0) ? $entry['aliases'][0] : '';
     
     // Add '...' to indicate more aliases exist
-    if (count($entry['aliases']) > 1)
+    $complete = '';
+    if (count($entry['aliases']) > 1) {
         $alias .= " ..."; 
+        foreach ($entry['aliases'] as $a)
+            $complete .= "<div>$a</div>";
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Item buttons
@@ -95,6 +100,7 @@ foreach ($hosts as $real_ip => $entry) {
     $item['details'] = array(
         $order_ip,
         $hostname,
+        (!empty($complete) ? "<a href='#' data-ip='$ip' class='view_alias'>" . $alias . "<div class='alias-list theme-hidden'>" . $complete . "</div></a>" : $alias),
     );
 
     $items[] = $item;
@@ -104,7 +110,10 @@ foreach ($hosts as $real_ip => $entry) {
 // Summary table
 ///////////////////////////////////////////////////////////////////////////////
 
-$options['default_rows'] = 100;
+$options = [
+    'default_rows' => 100,
+    'responsive' => array(2 => 'none', 3 => 'none'),
+];
 
 echo summary_table(
     lang('dns_dns_entries'),
